@@ -36,8 +36,8 @@ if(!searchParams?.get('s')){
     url = 'https://api.themoviedb.org/3/discover/tv/?api_key='+process.env.REACT_APP_TMBD_API;
 
  }else{
-
-//we are not grabing the data from the api from themoviedb.org;
+ 
+//we are not grabing the data from the api from themoviedb.org; test
 
 url = 'https://api.themoviedb.org/3/search/tv?api_key='+process.env.REACT_APP_TMBD_API+'&query='+searchParams?.get('s');
 
