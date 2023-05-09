@@ -4,6 +4,7 @@ import '../css/style.css';
 
 import { useSearchParams  } from 'react-router-dom';
 import Nav from '../components/Nav';
+import Item from '../components/Item';
 
 const Home = () =>{
 
@@ -35,7 +36,7 @@ if(!searchParams?.get('s')){
 
 //we are not grabing the data from the api from themoviedb.org;
 
-url = 'https://api.themoviedb.org/3/search/movie?api_key='+process.env.REACT_APP_TMBD_API+'&query='+searchParams?.get('s');
+url = 'https://api.themoviedb.org/3/search/multi?api_key='+process.env.REACT_APP_TMBD_API+'&query='+searchParams?.get('s');
 
  }
 fetch(url+'&page='+Page)
@@ -44,6 +45,7 @@ fetch(url+'&page='+Page)
 
 
 if(responseJSON == undefined)return;
+console.log(responseJSON?.results);
 setDataSource(responseJSON?.results);
 setPage(Page+1)
 
@@ -93,12 +95,13 @@ if(!searchParams?.get('s')){
            
     // url = 'https://api.themoviedb.org/3/discover/movie/?api_key='+process.env.REACT_APP_TMBD_API+'&page='+Page;
     url = 'https://api.themoviedb.org/3/discover/movie/?api_key='+process.env.REACT_APP_TMBD_API;
+    
 
  }else{
 
 //we are not grabing the data from the api from themoviedb.org;
 
-url = 'https://api.themoviedb.org/3/search/movie?api_key='+process.env.REACT_APP_TMBD_API+'&query='+searchParams?.get('s');
+url = 'https://api.themoviedb.org/3/search/multi?api_key='+process.env.REACT_APP_TMBD_API+'&query='+searchParams?.get('s');
 
  }
 
@@ -155,35 +158,9 @@ setPage(Page+1)
 
 const Items = dataSource.map((item,index)=>{
     return(
-    <div key={index} className={'card'}>
-    <a href={'/movie/US/'+item?.id} className='cardLink'>
-        <b className={'viewMore'}>More</b>
 
-    </a>
+        <Item item={item} key={index} index={index} />
     
-   
-    <img style={{width:'100%',height:300,objectFit:'cover'}} src={'https://image.tmdb.org/t/p/original'+item?.poster_path} />
-
-
-
-<div className={'overview'}>
-    <h3 className={'title'}>{item?.title || item?.name}</h3>
-   
-    <p>{item?.overview}</p>
-    
-
-    <div className={'info'}>
-    <b>Release Date</b>
-    <p>{item?.release_date}</p>
-
-    </div>
-    
-    <div className={'info'}>
-        <b>Rating</b>
-        <span>{item?.vote_average}/10</span></div>
-    
-        </div>
-    </div>
     
     
     )

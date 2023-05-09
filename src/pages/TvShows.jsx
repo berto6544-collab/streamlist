@@ -4,6 +4,7 @@ import '../css/style.css';
 
 import { useSearchParams  } from 'react-router-dom';
 import Nav from '../components/Nav';
+import Item from '../components/Item';
 const Movies= () =>{
 
     const [searchParams, setSearchParams] = useSearchParams(); 
@@ -50,6 +51,7 @@ fetch(url+'&page='+Page)
 if(responseJSON == undefined)return;
 setDataSource(responseJSON?.results);
 setPage(Page+1)
+console.log(responseJSON?.results)
 
 
 
@@ -139,32 +141,8 @@ setPage(Page+1)
 
 const Items = dataSource.map((item,index)=>{
     return(
-    <div key={index} className={'card'}>
-    <a href={'/show/US/'+item?.id} className='cardLink'>
-        <b className={'viewMore'}>More</b>
-
-    </a>
     
-   
-    <img style={{width:'100%',height:300,objectFit:'cover'}} src={'https://image.tmdb.org/t/p/original'+item?.poster_path} />
-    <div className={'overview'}>
-
-    <h3 className={'title'}>{item?.title || item?.name||item?.original_name}</h3>
-    <p>{item?.overview}</p>
-    
-
-    <div className={'info'}>
-    <b>Release Date</b>
-    <p>{item?.first_air_date}</p>
-
-    </div>
-    
-    <div className={'info'}>
-        <b>Rating</b>
-        <span>{item?.vote_average}/10</span></div>
-    
-</div>
-    </div>
+        <Item item={item} key={index} index={index} />
     
     
     )
