@@ -5,6 +5,9 @@ import '../css/style.css';
 import { useSearchParams  } from 'react-router-dom';
 import Nav from '../components/Nav';
 import Item from '../components/Item';
+import {useQuery} from 'react-query';
+
+
 
 const Home = () =>{
 
@@ -17,20 +20,16 @@ const Home = () =>{
     const [PageTv,setPageTv] = React.useState(1);
     const [hasMore,sethasMore] = React.useState(true);
     const [next,setnext] = React.useState('');
-
+    //const [url,setUrl] = React.useState('');
+   
     let url = 'https://api.themoviedb.org/3/discover/movie/?api_key='+process.env.REACT_APP_TMBD_API;
-
-    React.useEffect(()=>{
-
-
-
 
 
 //we are not grabing the data from the api from themoviedb.org;
 if(!searchParams?.get('s')){
            
     // url = 'https://api.themoviedb.org/3/discover/movie/?api_key='+process.env.REACT_APP_TMBD_API+'&page='+Page;
-    url = 'https://api.themoviedb.org/3/discover/movie/?api_key='+process.env.REACT_APP_TMBD_API;
+    url = 'https://api.themoviedb.org/3/discover/movie?api_key='+process.env.REACT_APP_TMBD_API;
 
  }else{
 
@@ -39,7 +38,38 @@ if(!searchParams?.get('s')){
 url = 'https://api.themoviedb.org/3/search/multi?api_key='+process.env.REACT_APP_TMBD_API+'&query='+searchParams?.get('s');
 
  }
-fetch(url+'&page='+Page)
+
+ 
+
+    const { isLoading, error, data, isFetching } = useQuery("Data",() =>{
+   fetch(url+'&page='+Page)
+    .then(res=>res.json())
+    .then(responseJSON=>{
+        console.log(responseJSON)
+        if(responseJSON?.results){
+        setDataSource(responseJSON?.results)
+        }
+        setPage(Page+1);
+    })
+    }, { refetchOnWindowFocus: false }
+    
+    
+    )
+
+    
+
+    React.useEffect(()=>{
+
+      
+ 
+
+
+
+
+
+
+
+/*fetch(url+'&page='+Page)
 .then(res=>res.json())
 .then(responseJSON=>{
 
@@ -53,29 +83,9 @@ setPage(Page+1)
 
 
 
-})
-
-
-/*fetch(urlTv)
-.then(res=>res.json())
-.then(responseJSON=>{
-
-
-if(responseJSON == undefined)return;
-setDataSource(responseJSON?.results);
-
-mergeTwoRandom([dataSource],[responseJSON?.results])
-
-setPageTv(responseJSON?.page+1)
-
-
-
-console.log(responseJSON?.results)
-
-
-
-
 })*/
+
+
 
 
 

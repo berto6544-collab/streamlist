@@ -51,7 +51,7 @@ const Genre = () =>{
         
 
                // console.log(responseJSON);
-                if(responseJSON == undefined)return;
+                if(responseJSON?.results == undefined)return;
         
                 //if(responseJSON.results.length == 0)return sethasMore(false);
                 

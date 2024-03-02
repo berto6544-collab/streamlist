@@ -19,7 +19,7 @@ const Movies= () =>{
     const [next,setnext] = React.useState('');
 
 
-    let url = 'https://api.themoviedb.org/3/discover/movie/?api_key='+process.env.REACT_APP_TMBD_API;
+    let url = 'https://api.themoviedb.org/3/discover/movie?api_key='+process.env.REACT_APP_TMBD_API;
 
     React.useEffect(()=>{
 
@@ -40,12 +40,13 @@ url = 'https://api.themoviedb.org/3/search/movie?api_key='+process.env.REACT_APP
         }
 
 
+    
 fetch(url+'&page='+Page)
 .then(res=>res.json())
 .then(responseJSON=>{
 
 
-if(responseJSON == undefined)return;
+if(responseJSON?.results == undefined)return;
 setDataSource(responseJSON?.results);
 setPage(Page+1)
 
